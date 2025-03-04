@@ -4,72 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pizza Party Countdown</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background: linear-gradient(to right, #b06ab3, #4568dc);
+            background: linear-gradient(to right, #b993d6, #8ca6db);
             color: white;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        h1 {
-            font-size: 2.5em;
+            text-align: center;
+            padding: 20px;
         }
         .countdown {
+            font-size: 2rem;
             display: flex;
+            justify-content: center;
             gap: 20px;
-            font-size: 2em;
-            margin-top: 20px;
+            margin-bottom: 20px;
         }
-        .time {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 10px 20px;
-            border-right: 2px solid white;
+        .countdown div {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            width: 80px;
         }
-        .time:last-child {
-            border-right: none;
-        }
-        .stars {
-            margin-top: 20px;
-            font-size: 2em;
+        .progress {
+            height: 30px;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
     <h1>Pizza Party Countdown! 🍕</h1>
     <div class="countdown">
-        <div class="time"><span id="days">00</span>DAYS</div>
-        <div class="time"><span id="hours">00</span>HRS</div>
-        <div class="time"><span id="minutes">00</span>MIN</div>
-        <div class="time"><span id="seconds">00</span>SEC</div>
+        <div><span id="days">00</span><br>days</div>
+        <div><span id="hours">00</span><br>hrs</div>
+        <div><span id="minutes">00</span><br>min</div>
+        <div><span id="seconds">00</span><br>sec</div>
     </div>
-    <div class="stars">⭐⭐⭐⭐⭐</div>
-    
+    <h3>Class Progress</h3>
+    <div class="progress">
+        <div id="progress-bar" class="progress-bar bg-warning" role="progressbar" style="width: 50%;">50%</div>
+    </div>
     <script>
         function updateCountdown() {
-            const partyDate = new Date("2025-03-28T12:10:00").getTime();
-            const now = new Date().getTime();
-            const diff = partyDate - now;
-            
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            
-            document.getElementById("days").innerText = days.toString().padStart(2, '0');
-            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
-            document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
-            document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+            const eventDate = new Date("March 13, 2025 12:00:00").getTime();
+            setInterval(() => {
+                const now = new Date().getTime();
+                const timeLeft = eventDate - now;
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                document.getElementById("days").textContent = days.toString().padStart(2, '0');
+                document.getElementById("hours").textContent = hours.toString().padStart(2, '0');
+                document.getElementById("minutes").textContent = minutes.toString().padStart(2, '0');
+                document.getElementById("seconds").textContent = seconds.toString().padStart(2, '0');
+            }, 1000);
         }
-        
-        setInterval(updateCountdown, 1000);
+        function updateProgress(percentage) {
+            document.getElementById("progress-bar").style.width = percentage + "%";
+            document.getElementById("progress-bar").textContent = percentage + "%";
+        }
         updateCountdown();
+        updateProgress(50); // Change this value based on the class performance
     </script>
 </body>
 </html>
